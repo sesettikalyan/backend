@@ -9,7 +9,16 @@ const path = require("path"); // Import path module for serving static files
 dotenv.config(); // Load environment variables at the very beginning
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", Router);
