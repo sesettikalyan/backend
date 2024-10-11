@@ -6,6 +6,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path"); // Import path module for serving static files
 const flightsRouter = require("./routers/flights.js");
+const flightsUserdetailsRouter = require("./routers/flight-userdetails.js");
 
 dotenv.config(); // Load environment variables at the very beginning
 
@@ -15,6 +16,7 @@ app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", Router);
 app.use("/flights", flightsRouter);
+app.use("/users", flightsUserdetailsRouter);
 
 connectToMongoDB();
 

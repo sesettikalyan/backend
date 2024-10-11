@@ -15,6 +15,12 @@ const flightUserSchema = mongoose.Schema({
     enum: ["admin", "user"],
     default: "user",
   },
+  userDetails: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserDetail",
+    },
+  ],
 });
 
 const flightUser = mongoose.model("flightUser", flightUserSchema);
