@@ -10,6 +10,11 @@ const flightUserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  userType: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
+  },
 });
 
 const flightUser = mongoose.model("flightUser", flightUserSchema);
