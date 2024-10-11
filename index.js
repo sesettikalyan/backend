@@ -4,11 +4,11 @@ const connectToMongoDB = require("./config/connetdb.js");
 const Router = require("./routers/route.js");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const path = require("path"); // Import path module for serving static files
+const path = require("path");
 const flightsRouter = require("./routers/flights.js");
 const flightsUserdetailsRouter = require("./routers/flight-userdetails.js");
 
-dotenv.config(); // Load environment variables at the very beginning
+dotenv.config();
 
 const app = express();
 app.use(cors());
