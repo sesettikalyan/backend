@@ -14,7 +14,14 @@ const {
   getAllComments,
   deleteComment,
 } = require("../controllers/comment-controller.js");
+const {
+  signUpFlightUser,
+  loginFlightUser,
+} = require("../controllers/flight-user-controller.js");
 
+{
+  /* blog-management-backend */
+}
 Router.post("/signup", signUpUser);
 Router.post("/login", loginUser);
 Router.post("/create", authenticateToken, createPost);
@@ -25,5 +32,11 @@ Router.delete("/posts/:id", authenticateToken, deletePost);
 Router.post("/comment/new", authenticateToken, newComment);
 Router.get("/comments/:id", authenticateToken, getAllComments);
 Router.delete("/delete-comment/:id", authenticateToken, deleteComment);
+
+{
+  /* flight-reservation-system-backend */
+}
+Router.post("/flight/signup", signUpFlightUser);
+Router.post("/flight/signin", loginFlightUser);
 
 module.exports = Router;
