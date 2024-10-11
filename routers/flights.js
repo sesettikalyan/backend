@@ -13,7 +13,7 @@ router
   .route("/:id")
   .get(getFlightById)
   .delete(deleteFlightById)
-  .patch(updateFlightById);
+  .put(updateFlightById);
 router.route("/search").post(searchFlights);
 
 module.exports = router;
