@@ -9,8 +9,6 @@ const flightsRouter = require("./routers/flights.js");
 const flightsUserdetailsRouter = require("./routers/flight-userdetails.js");
 const bookingsRouter = require("./routers/bookings.js");
 
-const pdf = require("html-pdf");
-
 const pdfTemplate = require("./documents");
 
 dotenv.config();
@@ -25,18 +23,33 @@ app.use("/flights", flightsRouter);
 app.use("/users", flightsUserdetailsRouter);
 app.use("/bookings", bookingsRouter);
 
-app.post("/create-pdf", (req, res) => {
-  pdf.create(pdfTemplate(req.body), {}).toBuffer((err, buffer) => {
-    if (err) {
-      return res.status(500).send("Error generating PDF");
-    }
+// app.post("/create-pdf", async (req, res) => {
+//   const htmlContent = pdfTemplate(req.body);
+//   console.log("HTML content:", htmlContent);
 
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", "attachment; filename=ticket.pdf");
+//   try {
+//     const browser = await puppeteer.launch({ headless: true });
+//     const page = await browser.newPage();
+//     await page.setContent(htmlContent);
 
-    res.status(200).send(buffer);
-  });
-});
+//     // Generate PDF in memory
+//     const buffer = await page.pdf({
+//       format: "A4",
+//     });
+
+//     await browser.close();
+
+//     // Set response headers
+//     res.setHeader("Content-Type", "application/pdf");
+//     res.setHeader("Content-Disposition", "attachment; filename=result.pdf");
+
+//     // Send the PDF buffer as the response
+//     res.send(buffer);
+//   } catch (err) {
+//     console.error("Error generating PDF:", err);
+//     return res.status(500).send("Error generating PDF");
+//   }
+// });
 
 connectToMongoDB();
 
