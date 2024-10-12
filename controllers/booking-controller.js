@@ -157,7 +157,6 @@ module.exports = {
 
     if (digest === req.headers["x-razorpay-signature"]) {
       console.log("request is legit");
-      // process it
     } else {
       // pass it
     }
