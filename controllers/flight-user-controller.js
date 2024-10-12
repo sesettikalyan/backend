@@ -63,6 +63,7 @@ const loginFlightUser = async (req, res) => {
         refreshtoken,
         email: user.email,
         userType: user.userType,
+        _id: user._id,
       });
     } else {
       return res.status(400).json({ msg: "Password does not match" });
