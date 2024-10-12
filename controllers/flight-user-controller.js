@@ -33,7 +33,6 @@ const signUpFlightUser = async (req, res) => {
   }
 };
 
-// Login an existing flight user
 const loginFlightUser = async (req, res) => {
   try {
     // Find the user by email
