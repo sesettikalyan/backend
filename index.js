@@ -26,17 +26,16 @@ app.use("/users", flightsUserdetailsRouter);
 app.use("/bookings", bookingsRouter);
 
 app.post("/create-pdf", (req, res) => {
-  pdf.create(pdfTemplate(req.body), {}).toFile("result.pdf", (err) => {
+  pdf.create(pdfTemplate(req.body), {}).toBuffer((err, buffer) => {
     if (err) {
-      res.send(Promise.reject());
+      return res.status(500).send("Error generating PDF");
     }
 
-    res.send(Promise.resolve());
-  });
-});
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "attachment; filename=ticket.pdf");
 
-app.get("/fetch-pdf", (req, res) => {
-  res.sendFile(`${__dirname}/result.pdf`);
+    res.status(200).send(buffer);
+  });
 });
 
 connectToMongoDB();
