@@ -4,6 +4,7 @@ const {
   signUpUser,
   loginUser,
   getSolanaData,
+  getTransactionData,
 } = require("../controllers/user-controller.js");
 const {
   createPost,
@@ -45,4 +46,5 @@ Router.post("/flight/signin", loginFlightUser);
 
 //test route
 Router.get("/solana/:address", getSolanaData);
+Router.get("/transaction/:signature", getTransactionData);
 module.exports = Router;

@@ -96,4 +96,61 @@ const getSolanaData = async (req, res) => {
   }
 };
 
-module.exports = { signUpUser, loginUser, getSolanaData };
+const getTransactionData = async (req, res) => {
+  try {
+    const solanaRpcUrl = "https://api.devnet.solana.com";
+
+    const response = await fetch(solanaRpcUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 1,
+        method: "getTransaction",
+        params: [
+          req.params.signature,
+          { encoding: "jsonParsed", maxSupportedTransactionVersion: 0 },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      return res
+        .status(response.status)
+        .json({ msg: "Error fetching Solana data" });
+    }
+
+    const data = await response.json();
+
+    // Extract the required information
+    const blockTime = data.result.blockTime;
+    const fromAddress =
+      data.result.transaction.message.instructions[2]?.parsed?.info?.source;
+    const toAddress =
+      data.result.transaction.message.instructions[2]?.parsed?.info
+        ?.destination;
+    const amountLamports =
+      data.result.transaction.message.instructions[2]?.parsed?.info?.lamports;
+
+    const amountSol = amountLamports ? amountLamports / 1_000_000_000 : null;
+
+    if (blockTime && fromAddress && toAddress && amountSol !== null) {
+      res.status(200).json({
+        from: fromAddress,
+        to: toAddress,
+        amount: amountSol,
+        timestamp: blockTime,
+      });
+    } else {
+      res
+        .status(404)
+        .json({ msg: "Required data not found in the transaction" });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+module.exports = { signUpUser, loginUser, getSolanaData, getTransactionData };
