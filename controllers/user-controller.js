@@ -68,7 +68,6 @@ const loginUser = async (req, res) => {
 const getSolanaData = async (req, res) => {
   try {
     const solanaRpcUrl = "https://api.devnet.solana.com";
-    // const solanaRpcUrl = "https://docs-demo.solana-mainnet.quiknode.pro";
 
     const response = await fetch(solanaRpcUrl, {
       method: "POST",
