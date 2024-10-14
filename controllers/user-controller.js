@@ -62,4 +62,39 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { signUpUser, loginUser };
+{
+  /* crypto transaction signatures*/
+}
+const getSolanaData = async (req, res) => {
+  try {
+    const solanaRpcUrl = "https://api.devnet.solana.com";
+    // const solanaRpcUrl = "https://docs-demo.solana-mainnet.quiknode.pro";
+
+    const response = await fetch(solanaRpcUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 1,
+        method: "getSignaturesForAddress",
+        params: [req.params.address, { limit: 6 }],
+      }),
+    });
+    console.log("resp", response);
+    if (!response.ok) {
+      return res
+        .status(response.status)
+        .json({ msg: "Error fetching Solana data" });
+    }
+
+    const data = await response.json();
+    console.log("data", data);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+module.exports = { signUpUser, loginUser, getSolanaData };

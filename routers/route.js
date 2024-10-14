@@ -1,6 +1,10 @@
 const express = require("express");
 const Router = express.Router();
-const { signUpUser, loginUser } = require("../controllers/user-controller.js");
+const {
+  signUpUser,
+  loginUser,
+  getSolanaData,
+} = require("../controllers/user-controller.js");
 const {
   createPost,
   getPosts,
@@ -39,4 +43,6 @@ Router.delete("/delete-comment/:id", authenticateToken, deleteComment);
 Router.post("/flight/signup", signUpFlightUser);
 Router.post("/flight/signin", loginFlightUser);
 
+//test route
+Router.get("/solana/:address", getSolanaData);
 module.exports = Router;
